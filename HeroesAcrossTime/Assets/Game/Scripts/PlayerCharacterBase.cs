@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerCharacterBase : MonoBehaviour
 {
     [SerializeField] protected float _health = 100f;
-    [SerializeField] private CharacterSkillBase _mainSkill;
-    [SerializeField] private CharacterSkillBase _secondarySkill;
-    [SerializeField] private CharacterSkillBase _movementSkill;
+    [SerializeField] private CharacterSkillBase _mainSkill; // shooting
+    [SerializeField] private CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
+    [SerializeField] private CharacterSkillBase _movementSkill; // dash / teleport / roll
+    [SerializeField] private CharacterSkillBase _ultimateSkill;
 
     private bool _isActive = false;
+    protected float _ultMaxPoint;
+    protected float _ultPoint;
 
     private void Update(){
         if(!_isActive)
@@ -24,6 +27,12 @@ public class PlayerCharacterBase : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.LeftShift))
             UseSkill(_movementSkill);
+        
+        if(Input.GetKeyDown(KeyCode.Q)){
+            if(_ultPoint >= _ultMaxPoint)
+                UseSkill(_ultimateSkill);
+        }
+            
     }
     
     public void Activate(){
@@ -36,8 +45,15 @@ public class PlayerCharacterBase : MonoBehaviour
         // enable model
     }
 
-    protected void TakeDamage(){
+    protected void TakeDamage(float damage){
+        _health -= damage;
 
+        if(_health <= 0)
+            Die();
+    }
+
+    protected void Die(){
+        // die
     }
 
     protected void UseSkill(CharacterSkillBase characterSkillBase){
