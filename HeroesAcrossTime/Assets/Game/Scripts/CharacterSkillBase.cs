@@ -7,7 +7,7 @@ public class CharacterSkillBase : MonoBehaviour
     protected float _skillCooldown = 1f;
     private bool _readyToUse = true;
     
-    public virtual void UseSkill(){
+    public virtual void UseSkill(Vector3 targetLocation){ // every skill needs a point to be used
         if(!_readyToUse)
             return;
         // use whatever skill this is
