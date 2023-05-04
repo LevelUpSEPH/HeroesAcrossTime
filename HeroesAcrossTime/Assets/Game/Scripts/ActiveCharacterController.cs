@@ -19,10 +19,12 @@ public class ActiveCharacterController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)){
             SwitchToCharacter(_availableCharacters[0]);
+            Debug.Log("Switching to character no : 1 ");
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2)){
             SwitchToCharacter(_availableCharacters[1]);
+            Debug.Log("Switching to character no : 2 ");
         }
     }
 
