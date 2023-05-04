@@ -17,7 +17,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void HandleMovement(){
         Vector3 movementDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        _characterController.Move(movementDir * _movementSpeed);
+        _characterController.Move(movementDir * _movementSpeed * Time.deltaTime);
     }
 
 }

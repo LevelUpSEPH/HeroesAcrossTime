@@ -57,7 +57,7 @@ public class PlayerCharacterBase : MonoBehaviour
     }
 
     protected void UseSkill(CharacterSkillBase characterSkillBase){
-        characterSkillBase.UseSkill();
+        characterSkillBase.UseSkill(Vector3.zero); // placeHolder
     }
 
 }
