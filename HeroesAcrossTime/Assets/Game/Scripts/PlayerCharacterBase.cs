@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerCharacterBase : MonoBehaviour
 {
@@ -13,10 +14,18 @@ public class PlayerCharacterBase : MonoBehaviour
     private bool _isActive = false;
     protected float _ultMaxPoint;
     protected float _ultPoint;
+    protected bool _canUseSkill = true;
 
     private void Update(){
         if(!_isActive)
             return;
+        if(_canUseSkill)
+            HandleSkills();
+            
+    }
+
+    private void HandleSkills(){
+
         if(Input.GetMouseButtonDown(0)){
             UseSkill(_mainSkill);
         }
@@ -32,7 +41,6 @@ public class PlayerCharacterBase : MonoBehaviour
             if(_ultPoint >= _ultMaxPoint)
                 UseSkill(_ultimateSkill);
         }
-            
     }
     
     public void Activate(){
@@ -57,7 +65,10 @@ public class PlayerCharacterBase : MonoBehaviour
     }
 
     protected void UseSkill(CharacterSkillBase characterSkillBase){
-        characterSkillBase.UseSkill(Vector3.zero); // placeHolder
+        characterSkillBase.UseSkill(Vector3.zero, ResetCanUseSkill); // placeHolder
     }
 
+    protected void ResetCanUseSkill(){
+        _canUseSkill = true;
+    }
 }
