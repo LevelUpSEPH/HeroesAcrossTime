@@ -5,10 +5,21 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
     protected float _skillCooldown = 3f;
 
     public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
-        
-        GameObject bullet1 = _bulletPoolController.GetBulletToShoot();
-        GameObject bullet2 = _bulletPoolController.GetBulletToShoot();
-        GameObject bullet3 = _bulletPoolController.GetBulletToShoot();
+        if(!_readyToUse)
+            return;
+        // use whatever skill this is
+        List<GameObject> bullets = new List<GameObject>();
 
+        for(int i = 0; i < 3; i++){
+            GameObject bullet = _bulletPoolController.GetBulletToShoot();
+            bullets.Add(bullet);
+        }
+        ShootBullets(bullets);
+        
+        StartCoroutine(StartSkillCooldown(OnSkillUsed));
+    }
+
+    private void ShootBullets(List<GameObject> bullets){
+        // shoot the bullets
     }
 }
