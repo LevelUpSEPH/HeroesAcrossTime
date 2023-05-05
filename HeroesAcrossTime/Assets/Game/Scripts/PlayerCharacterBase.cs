@@ -66,6 +66,7 @@ public class PlayerCharacterBase : MonoBehaviour
 
     protected void UseSkill(CharacterSkillBase characterSkillBase){
         characterSkillBase.UseSkill(Vector3.zero, ResetCanUseSkill); // placeHolder
+        _canUseSkill = false;
     }
 
     protected void ResetCanUseSkill(){
