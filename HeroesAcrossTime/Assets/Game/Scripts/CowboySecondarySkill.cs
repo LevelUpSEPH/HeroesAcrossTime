@@ -1,15 +1,14 @@
 
-public class CowboySecondarySkill : CharacterSkillBase // burst fires his gun
+public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick succession
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private BulletPoolController _bulletPoolController;
+    protected float _skillCooldown = 3f;
 
-    // Update is called once per frame
-    void Update()
-    {
+    public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
         
+        GameObject bullet1 = _bulletPoolController.GetBulletToShoot();
+        GameObject bullet2 = _bulletPoolController.GetBulletToShoot();
+        GameObject bullet3 = _bulletPoolController.GetBulletToShoot();
+
     }
 }

@@ -1,15 +1,21 @@
 
 public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private BulletPoolController _bulletPoolController;
+    protected float _skillCooldown = 0.7f;
+
+    public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
+        if(!_readyToUse)
+            return;
+        Shoot();
+        StartCoroutine(StartSkillCooldown(OnSkillUsed));
+        OnSkillUsed();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Shoot(){
+        GameObject bullet = _bulletPoolController.GetBulletToShoot();
+        // bullet moves with dotween towards the look direction / moves normally depending on delta time and model transform forward, will see
+        // bullet damages the target it hits, not the character itself
     }
+
 }
