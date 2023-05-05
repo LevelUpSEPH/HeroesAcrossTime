@@ -10,7 +10,7 @@ public class BulletPoolController : MonoBehaviour
     public GameObject GetBulletToShoot(){
         foreach (GameObject bullet in _bulletPool)
         {
-            if(!bullet.activeinHierarchy)
+            if(!bullet.activeInHierarchy)
                 return bullet;
 
         }
