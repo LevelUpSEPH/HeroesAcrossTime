@@ -9,7 +9,7 @@ public class ActiveCharacterController : MonoBehaviour
 
     public static event Action<PlayerCharacter> SwitchedCharacter;
     
-    [SerializeField] private PlayerCharacter[] _availableCharacters;
+    [SerializeField] private List<PlayerCharacter> _availableCharacters = new List<PlayerCharacter>();
     
     private PlayerCharacter _activeCharacter;
 
@@ -22,6 +22,7 @@ public class ActiveCharacterController : MonoBehaviour
 
     void Start()
     {
+        InitializeList();
         InitializeFirstActiveCharacter();
     }
 
@@ -49,16 +50,23 @@ public class ActiveCharacterController : MonoBehaviour
         }
     }
 
+    private void InitializeList(){
+        foreach(Transform child in transform){
+            PlayerCharacter playerCharacter = child.gameObject.GetComponent<PlayerCharacter>();
+            _availableCharacters.Add(playerCharacter);
+        }
+    }
+
     private void InitializeFirstActiveCharacter(){
         
-        for(int i = 0; i < _availableCharacters.Length; i++){ // sets the first character in list as active character
+        for(int i = 0; i < _availableCharacters.Count; i++){ // sets the first character in list as active character
             if(i == 0){
                 _availableCharacters[i].gameObject.SetActive(true);
                 _activeCharacter = _availableCharacters[i];
                 _activeCharacter.Activate();
             }
             else{
-                _activeCharacter.Deactivate();
+                _availableCharacters[i].Deactivate();
                 _availableCharacters[i].gameObject.SetActive(false);
             }
         }
