@@ -20,12 +20,12 @@ public class PlayerCharacter : MonoBehaviour
     private void Update(){
         if(!_isAlive)
             return;
-        
         if(!_isActive)
             return;
-        
-        if(_canUseSkill)
+        if(_canUseSkill){
             HandleSkills();
+        }
+            
             
     }
 
@@ -69,15 +69,11 @@ public class PlayerCharacter : MonoBehaviour
         _isAlive = false;
     }
 
-    protected bool TryUseSkill(CharacterSkillBase characterSkillBase){
+    protected void TryUseSkill(CharacterSkillBase characterSkillBase){
         if(characterSkillBase.TryUseSkill(Vector3.zero, ResetCanUseSkill)){
             _canUseSkill = false;    
-            return true;
+            return;
         }
-        else{
-            return false;
-        }
-
         
     }
 
