@@ -6,6 +6,7 @@ using System;
 public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] protected float _health = 100f;
+    [SerializeField] protected GameObject _playerModel;
     [SerializeField] private CharacterSkillBase _mainSkill; // shooting
     [SerializeField] private CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
     [SerializeField] private CharacterSkillBase _movementSkill; // dash / teleport / roll
@@ -83,5 +84,9 @@ public class PlayerCharacter : MonoBehaviour
     
     public bool GetIsAlive(){
         return _isAlive;
+    }
+
+    public GameObject GetPlayerModel(){
+        return _playerModel;
     }
 }
