@@ -5,19 +5,22 @@ using System;
 
 public class CharacterSkillBase : MonoBehaviour
 {
-    protected float _skillCooldown = 1f;
+    [SerializeField] protected float _skillCooldown = 1f;
     protected bool _readyToUse = true;
     
-    public virtual void UseSkill(Vector3 targetPosition, Action OnSkillUsed){ 
+    public virtual bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){ 
         if(!_readyToUse)
-            return;
+            return false;
         // use whatever skill this is
         StartCoroutine(StartSkillCooldown());
         StartCoroutine(GlobalSkillCooldown(OnSkillUsed)); // cooldown before using another skill
+        return true;
     }
 
     protected IEnumerator StartSkillCooldown(){
+        _readyToUse = false;
         yield return new WaitForSeconds(_skillCooldown);
+        _readyToUse = true;
     }
 
     protected IEnumerator GlobalSkillCooldown(Action OnCooldownComplete){

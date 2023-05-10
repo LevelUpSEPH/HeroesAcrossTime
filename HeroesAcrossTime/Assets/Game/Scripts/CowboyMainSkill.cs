@@ -6,14 +6,14 @@ using System;
 public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
-    new protected float _skillCooldown = 0.7f;
 
-    public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
+    public override bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){
         if(!_readyToUse)
-            return;
+            return false;
         Shoot();
         StartCoroutine(StartSkillCooldown());
         StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
+        return true;
     }
 
     private void Shoot(){

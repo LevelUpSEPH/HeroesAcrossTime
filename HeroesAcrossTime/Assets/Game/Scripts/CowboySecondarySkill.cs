@@ -6,11 +6,10 @@ using System;
 public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick succession
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
-    new protected float _skillCooldown = 3f;
 
-    public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
+    public override bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){
         if(!_readyToUse)
-            return;
+            return false;
         // use whatever skill this is
         List<GameObject> bullets = new List<GameObject>();
 
@@ -19,13 +18,15 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
             bullets.Add(bullet);
         }
         ShootBullets(bullets);
-        
+        Debug.Log("Waiting for " + _skillCooldown + " seconds");
         StartCoroutine(StartSkillCooldown());
         StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
+        return true;
     }
 
     private void ShootBullets(List<GameObject> bullets){
         Debug.Log("Shot 3 bullets (cowboy secondary skill)");
         // shoot the bullets
     }
+    
 }
