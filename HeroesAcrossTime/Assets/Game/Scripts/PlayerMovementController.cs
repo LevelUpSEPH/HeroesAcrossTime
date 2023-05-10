@@ -45,8 +45,8 @@ public class PlayerMovementController : MonoBehaviour
         _activePlayerModel.transform.LookAt(MouseWorldPositionController.Instance.GetCursorPosTransform(), Vector3.up);
     }
 
-    private void OnSwitchedCharacter(PlayerCharacter PlayerCharacter){
-        _playerCharacter = PlayerCharacter;
+    private void OnSwitchedCharacter(PlayerCharacter playerCharacter){
+        _playerCharacter = playerCharacter;
         _activePlayerModel = _playerCharacter.gameObject;
     }
 }
