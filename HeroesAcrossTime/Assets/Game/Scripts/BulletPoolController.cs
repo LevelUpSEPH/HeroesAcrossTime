@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class BulletPoolController : MonoBehaviour
 {
-    private List<GameObject> _bulletPool = new List<GameObject>();
+    private List<BulletBehaviour> _bulletPool = new List<BulletBehaviour>();
 
-    public GameObject GetBulletToShoot(){
-        foreach (GameObject bullet in _bulletPool)
+    private void Start(){
+        foreach(Transform child in transform){
+            BulletBehaviour bulletBehaviour = child.GetComponent<BulletBehaviour>();
+            _bulletPool.Add(bulletBehaviour);
+        }
+    }
+
+    public BulletBehaviour GetBulletToShoot(){
+        foreach (BulletBehaviour bullet in _bulletPool)
         {
-            if(!bullet.activeInHierarchy)
+            if(!bullet.gameObject.activeInHierarchy)
                 return bullet;
 
         }
