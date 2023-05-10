@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BulletPoolController : MonoBehaviour
 {
-    public static BulletPoolController Instance {get; private set;}
     private List<GameObject> _bulletPool = new List<GameObject>();
 
     public GameObject GetBulletToShoot(){
@@ -14,5 +13,7 @@ public class BulletPoolController : MonoBehaviour
                 return bullet;
 
         }
+        Debug.Log("Not enough bullets exist in pool");
+        return null;
     }
 }
