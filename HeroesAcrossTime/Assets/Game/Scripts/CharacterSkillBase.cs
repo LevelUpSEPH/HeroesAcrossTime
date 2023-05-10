@@ -7,8 +7,13 @@ public class CharacterSkillBase : MonoBehaviour
 {
     [SerializeField] protected float _skillCooldown = 1f;
     protected bool _readyToUse = true;
+    protected PlayerCharacter _playerCharacter;
+
+    private void Awake(){
+        _playerCharacter = GetComponent<PlayerCharacter>();
+    }
     
-    public virtual bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){ 
+    public virtual bool TryUseSkill(Action OnSkillUsed){ 
         if(!_readyToUse)
             return false;
         // use whatever skill this is

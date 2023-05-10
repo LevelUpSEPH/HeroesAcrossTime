@@ -7,7 +7,7 @@ public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
 
-    public override bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){
+    public override bool TryUseSkill(Action OnSkillUsed){
         if(!_readyToUse)
             return false;
         Shoot();
@@ -18,9 +18,11 @@ public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
 
     private void Shoot(){
         Debug.Log("Shot bullet (cowboymainskill)");
-        //GameObject bullet = _bulletPoolController.GetBulletToShoot();
-        // bullet moves with dotween towards the look direction / moves normally depending on delta time and model transform forward, will see
-        // bullet damages the target it hits, not the character itself
+        GameObject bullet = _bulletPoolController.GetBulletToShoot();
+        BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+        bullet.SetActive(true);
+        bullet.transform.position = _playerCharacter.GetGunBarrelTransform().position;
+        bulletBehaviour.InitializeBullet(50, transform.rotation);
     }
 
 }

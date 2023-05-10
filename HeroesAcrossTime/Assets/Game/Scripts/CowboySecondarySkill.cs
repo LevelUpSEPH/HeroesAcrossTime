@@ -7,14 +7,14 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
 
-    public override bool TryUseSkill(Vector3 targetPosition, Action OnSkillUsed){
+    public override bool TryUseSkill(Action OnSkillUsed){
         if(!_readyToUse)
             return false;
         // use whatever skill this is
-        List<BulletBehaviour> bullets = new List<BulletBehaviour>();
+        List<GameObject> bullets = new List<GameObject>();
 
         for(int i = 0; i < 3; i++){
-            BulletBehaviour bullet = _bulletPoolController.GetBulletToShoot();
+            GameObject bullet = _bulletPoolController.GetBulletToShoot();
             bullets.Add(bullet);
         }
         ShootBullets(bullets);
@@ -24,7 +24,7 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
         return true;
     }
 
-    private void ShootBullets(List<BulletBehaviour> bullets){
+    private void ShootBullets(List<GameObject> bullets){
         Debug.Log("Shot 3 bullets (cowboy secondary skill)");
         // shoot the bullets
     }

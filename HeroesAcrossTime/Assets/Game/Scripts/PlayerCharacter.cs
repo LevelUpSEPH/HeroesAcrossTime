@@ -7,6 +7,7 @@ public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] protected float _health = 100f;
     [SerializeField] protected GameObject _playerModel;
+    [SerializeField] protected Transform _gunBarrelPosition;
     [SerializeField] private CharacterSkillBase _mainSkill; // shooting
     [SerializeField] private CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
     [SerializeField] private CharacterSkillBase _movementSkill; // dash / teleport / roll
@@ -71,7 +72,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     protected void TryUseSkill(CharacterSkillBase characterSkillBase){
-        if(characterSkillBase.TryUseSkill(Vector3.zero, ResetCanUseSkill)){
+        if(characterSkillBase.TryUseSkill(ResetCanUseSkill)){
             _canUseSkill = false;    
             return;
         }
@@ -89,4 +90,9 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject GetPlayerModel(){
         return _playerModel;
     }
+
+    public Transform GetGunBarrelTransform(){
+        return _gunBarrelPosition;
+    }
+
 }
