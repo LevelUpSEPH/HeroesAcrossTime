@@ -218,11 +218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &509303738 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 187732, guid: 93f8a13fb89985e4f8d0d8ecff94969a, type: 3}
-  m_PrefabInstance: {fileID: 1180808224}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &654775754
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f777606ed97648f4aa57474d92bdbbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillCooldown: 15
 --- !u!114 &1596267496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,6 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa1efdc75f7044a5bb80ce2baa09087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillCooldown: 4
 --- !u!114 &1596267497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05530f397623e459bb140a7b21929c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillCooldown: 3
   _bulletPoolController: {fileID: 1759699566}
 --- !u!114 &1596267498
 MonoBehaviour:
@@ -829,6 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cef174b1683e45929dff6e540e4327d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillCooldown: 0.7
   _bulletPoolController: {fileID: 1759699566}
 --- !u!114 &1596267499
 MonoBehaviour:
@@ -843,7 +842,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 100
-  _playerModel: {fileID: 509303738}
   _mainSkill: {fileID: 1596267498}
   _secondarySkill: {fileID: 1596267497}
   _movementSkill: {fileID: 1596267496}

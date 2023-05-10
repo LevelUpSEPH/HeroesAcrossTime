@@ -7,11 +7,11 @@ public class ActiveCharacterController : MonoBehaviour
 {
     public static ActiveCharacterController Instance {get; private set;}
 
-    public static event Action<PlayerCharacterBase> SwitchedCharacter;
+    public static event Action<PlayerCharacter> SwitchedCharacter;
     
-    [SerializeField] private PlayerCharacterBase[] _availableCharacters;
+    [SerializeField] private PlayerCharacter[] _availableCharacters;
     
-    private PlayerCharacterBase _activeCharacter;
+    private PlayerCharacter _activeCharacter;
 
     private void Awake(){
         if(Instance != null){
@@ -29,13 +29,23 @@ public class ActiveCharacterController : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)){
-            SwitchToCharacter(_availableCharacters[0]);
-            Debug.Log("Switching to character no : 1 ");
+            if(TrySwitchToCharacter(_availableCharacters[0])){
+                Debug.Log("Switching to character no : 1 ");
+            }
+            else{
+                Debug.Log("Cannot switch");
+            }
+            
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha2)){
-            SwitchToCharacter(_availableCharacters[1]);
-            Debug.Log("Switching to character no : 2 ");
+            if(TrySwitchToCharacter(_availableCharacters[1])){
+                Debug.Log("Switching to character no : 2 ");
+            }
+            else{
+                Debug.Log("Cannot switch");
+            }
+            
         }
     }
 
@@ -54,19 +64,22 @@ public class ActiveCharacterController : MonoBehaviour
         }
     }
 
-    private void SwitchToCharacter(PlayerCharacterBase playerCharacterBase){
-        if(_activeCharacter == playerCharacterBase){
-            return;
+    private bool TrySwitchToCharacter(PlayerCharacter newCharacter){
+        if(!newCharacter.GetIsAlive())
+            return false;
+        if(_activeCharacter == newCharacter){
+            return false;
         }
-        foreach(PlayerCharacterBase playerCharacterbase in _availableCharacters)
-            playerCharacterbase.Deactivate();
-        _activeCharacter = playerCharacterBase;
+        foreach(PlayerCharacter availableCharacter in _availableCharacters)
+            availableCharacter.Deactivate();
+        _activeCharacter = newCharacter;
         _activeCharacter.Activate();
         SwitchedCharacter?.Invoke(_activeCharacter);
+        return true;
 
     }
 
-    public PlayerCharacterBase GetActivePlayerCharacterBase(){
+    public PlayerCharacter GetActivePlayerCharacter(){
         return _activeCharacter;
     }
 }

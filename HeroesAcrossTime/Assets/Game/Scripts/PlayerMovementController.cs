@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     private CharacterController _characterController;
-    private PlayerCharacterBase _playerCharacter;
+    private PlayerCharacter _playerCharacter;
     private GameObject _activePlayerModel;
     private float _movementSpeed = 5f;
 
@@ -25,7 +25,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Initialize(){
         _characterController = GetComponent<CharacterController>();
-        _playerCharacter = ActiveCharacterController.Instance.GetActivePlayerCharacterBase();
+        _playerCharacter = ActiveCharacterController.Instance.GetActivePlayerCharacter();
         _activePlayerModel = _playerCharacter.gameObject;
     }
     private void AddListeners(){
@@ -45,8 +45,8 @@ public class PlayerMovementController : MonoBehaviour
         _activePlayerModel.transform.LookAt(MouseWorldPositionController.Instance.GetCursorPosTransform(), Vector3.up);
     }
 
-    private void OnSwitchedCharacter(PlayerCharacterBase playerCharacterBase){
-        _playerCharacter = playerCharacterBase;
+    private void OnSwitchedCharacter(PlayerCharacter PlayerCharacter){
+        _playerCharacter = PlayerCharacter;
         _activePlayerModel = _playerCharacter.gameObject;
     }
 }

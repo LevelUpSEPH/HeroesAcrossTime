@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerCharacterBase : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] protected float _health = 100f;
     [SerializeField] private CharacterSkillBase _mainSkill; // shooting
@@ -15,11 +15,15 @@ public class PlayerCharacterBase : MonoBehaviour
     protected float _ultMaxPoint;
     protected float _ultPoint;
     protected bool _canUseSkill = true;
+    protected bool _isAlive = true;
 
     private void Update(){
+        if(!_isAlive)
+            return;
+        
         if(!_isActive)
             return;
-        Debug.Log("Character is active and can use skills");
+        
         if(_canUseSkill)
             HandleSkills();
             
@@ -28,30 +32,30 @@ public class PlayerCharacterBase : MonoBehaviour
     private void HandleSkills(){
 
         if(Input.GetMouseButtonDown(0)){
-            UseSkill(_mainSkill);
+            TryUseSkill(_mainSkill);
         }
 
         if(Input.GetMouseButton(1)){
-            UseSkill(_secondarySkill);
+            TryUseSkill(_secondarySkill);
         }
 
         if(Input.GetKeyDown(KeyCode.LeftShift))
-            UseSkill(_movementSkill);
+            TryUseSkill(_movementSkill);
         
         if(Input.GetKeyDown(KeyCode.Q)){
             if(_ultPoint >= _ultMaxPoint)
-                UseSkill(_ultimateSkill);
+                TryUseSkill(_ultimateSkill);
         }
     }
     
     public void Activate(){
         _isActive = true;
-        // disable model 
+        // enable model 
     }
 
     public void Deactivate(){
         _isActive = false;
-        // enable model
+        // disable model
     }
 
     protected void TakeDamage(float damage){
@@ -62,16 +66,26 @@ public class PlayerCharacterBase : MonoBehaviour
     }
 
     protected void Die(){
-        // die
+        _isAlive = false;
     }
 
-    protected void UseSkill(CharacterSkillBase characterSkillBase){
-        characterSkillBase.UseSkill(Vector3.zero, ResetCanUseSkill); // placeHolder
-        _canUseSkill = false;
+    protected bool TryUseSkill(CharacterSkillBase characterSkillBase){
+        if(characterSkillBase.TryUseSkill(Vector3.zero, ResetCanUseSkill)){
+            _canUseSkill = false;    
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        
     }
 
     protected void ResetCanUseSkill(){
         _canUseSkill = true;
     }
-
+    
+    public bool GetIsAlive(){
+        return _isAlive;
+    }
 }
