@@ -18,15 +18,11 @@ public class ActiveCharacterController : MonoBehaviour
             Destroy(Instance);
         }
         Instance = this;
-    }
 
-    void Start()
-    {
         InitializeList();
         InitializeFirstActiveCharacter();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)){
@@ -59,7 +55,7 @@ public class ActiveCharacterController : MonoBehaviour
 
     private void InitializeFirstActiveCharacter(){
         
-        for(int i = 0; i < _availableCharacters.Count; i++){ // sets the first character in list as active character
+        /*for(int i = 0; i < _availableCharacters.Count; i++){ // sets the first character in list as active character
             if(i == 0){
                 _availableCharacters[i].GetPlayerModel().SetActive(true);
                 _activeCharacter = _availableCharacters[i];
@@ -70,6 +66,9 @@ public class ActiveCharacterController : MonoBehaviour
                 _availableCharacters[i].GetPlayerModel().SetActive(false);
             }
         }
+        */
+        TrySwitchToCharacter(_availableCharacters[0]);
+        Debug.Log("Set first character");
     }
 
     private bool TrySwitchToCharacter(PlayerCharacter newCharacter){
@@ -87,11 +86,13 @@ public class ActiveCharacterController : MonoBehaviour
         _activeCharacter = newCharacter;
         _activeCharacter.Activate();
         SwitchedCharacter?.Invoke(_activeCharacter);
+        Debug.Log("New active character is : " + _activeCharacter);
         return true;
 
     }
 
     public PlayerCharacter GetActivePlayerCharacter(){
+        Debug.Log(_activeCharacter + " is being returned");
         return _activeCharacter;
     }
 }
