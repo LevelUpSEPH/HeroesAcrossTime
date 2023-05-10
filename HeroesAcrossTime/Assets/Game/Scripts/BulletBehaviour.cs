@@ -19,13 +19,12 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
     }
 
     private void OnTriggerEnter(Collider other){
-        Debug.Log("Triggered w/ smth");
-
         if(other.gameObject.CompareTag("Player")){
             // damage the player
         }
 
         else if(other.gameObject.CompareTag("Enemy")){
+            Debug.Log("Collided with enemy");
             // damage the enemy
         }
 
