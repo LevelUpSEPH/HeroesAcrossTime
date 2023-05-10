@@ -19,6 +19,7 @@ public class PlayerCharacterBase : MonoBehaviour
     private void Update(){
         if(!_isActive)
             return;
+        Debug.Log("Character is active and can use skills");
         if(_canUseSkill)
             HandleSkills();
             
@@ -72,4 +73,5 @@ public class PlayerCharacterBase : MonoBehaviour
     protected void ResetCanUseSkill(){
         _canUseSkill = true;
     }
+
 }

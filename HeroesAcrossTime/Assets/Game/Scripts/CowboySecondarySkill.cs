@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick succession
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
-    protected float _skillCooldown = 3f;
+    new protected float _skillCooldown = 3f;
 
     public override void UseSkill(Vector3 targetPosition, Action OnSkillUsed){
         if(!_readyToUse)
@@ -16,10 +20,12 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
         }
         ShootBullets(bullets);
         
-        StartCoroutine(StartSkillCooldown(OnSkillUsed));
+        StartCoroutine(StartSkillCooldown());
+        StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
     }
 
     private void ShootBullets(List<GameObject> bullets){
+        Debug.Log("Shot 3 bullets (cowboy secondary skill)");
         // shoot the bullets
     }
 }
