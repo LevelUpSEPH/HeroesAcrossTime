@@ -2,17 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBehaviour : MonoBehaviour
+public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides with something, 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private float _bulletLifetime = 3f;
+    private float _bulletSpeedBase = 30f;
+    private float _bulletSpeed;
+
+    private void OnEnable(){
+        StartCoroutine(BulletLifetime());
+        ResetBullet();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(transform.forward * _bulletSpeed * Time.deltaTime, Space.World);
+    }
+
+    private void OnTriggerEnter(Collider other){
+        Debug.Log("Triggered w/ smth");
+
+        if(other.gameObject.CompareTag("Player")){
+            // damage the player
+        }
+
+        else if(other.gameObject.CompareTag("Enemy")){
+            // damage the enemy
+        }
+
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator BulletLifetime(){
+        yield return new WaitForSeconds(_bulletLifetime);
+        gameObject.SetActive(false);
+    }
+
+    public void SetBulletRotation(Quaternion rotation){
+        transform.rotation = rotation;
+    }
+
+    public void SetBulletSpeed(float bulletSpeed){
+        _bulletSpeed = bulletSpeed;
+    }
+
+    public void InitializeBullet(float bulletSpeed, Quaternion shooterRotation){
+        SetBulletSpeed(bulletSpeed);
+        SetBulletRotation(shooterRotation);
+    }
+
+    private void ResetBullet(){
+        SetBulletSpeed(_bulletSpeedBase);
     }
 }
