@@ -31,7 +31,7 @@ public class ActiveCharacterController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1)){
             if(TrySwitchToCharacter(_availableCharacters[0])){
-                Debug.Log("Switching to character no : 1 ");
+                Debug.Log("Switching to character: " + _availableCharacters[0]);
             }
             else{
                 Debug.Log("Cannot switch");
@@ -41,7 +41,7 @@ public class ActiveCharacterController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha2)){
             if(TrySwitchToCharacter(_availableCharacters[1])){
-                Debug.Log("Switching to character no : 2 ");
+                Debug.Log("Switching to character: " + _availableCharacters[1]);
             }
             else{
                 Debug.Log("Cannot switch");
@@ -78,8 +78,12 @@ public class ActiveCharacterController : MonoBehaviour
         if(_activeCharacter == newCharacter){
             return false;
         }
-        foreach(PlayerCharacter availableCharacter in _availableCharacters)
+        foreach(PlayerCharacter availableCharacter in _availableCharacters){
             availableCharacter.Deactivate();
+            availableCharacter.gameObject.SetActive(false);
+        }
+
+        newCharacter.gameObject.SetActive(true);    
         _activeCharacter = newCharacter;
         _activeCharacter.Activate();
         SwitchedCharacter?.Invoke(_activeCharacter);
