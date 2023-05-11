@@ -68,7 +68,6 @@ public class ActiveCharacterController : MonoBehaviour
         }
         */
         TrySwitchToCharacter(_availableCharacters[0]);
-        Debug.Log("Set first character");
     }
 
     private bool TrySwitchToCharacter(PlayerCharacter newCharacter){
@@ -86,13 +85,11 @@ public class ActiveCharacterController : MonoBehaviour
         _activeCharacter = newCharacter;
         _activeCharacter.Activate();
         SwitchedCharacter?.Invoke(_activeCharacter);
-        Debug.Log("New active character is : " + _activeCharacter);
         return true;
 
     }
 
     public PlayerCharacter GetActivePlayerCharacter(){
-        Debug.Log(_activeCharacter + " is being returned");
         return _activeCharacter;
     }
 }
