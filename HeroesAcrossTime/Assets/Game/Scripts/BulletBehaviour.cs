@@ -7,6 +7,7 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
     [SerializeField] private float _bulletLifetime = 3f;
     private float _bulletSpeedBase = 30f;
     private float _bulletSpeed;
+    private float _bulletDamage;
 
     private void OnEnable(){
         StartCoroutine(BulletLifetime());
@@ -19,13 +20,16 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
     }
 
     private void OnTriggerEnter(Collider other){
+        Debug.Log(other.gameObject.name);
+        
         if(other.gameObject.CompareTag("Player")){
             // damage the player
         }
 
         else if(other.gameObject.CompareTag("Enemy")){
             Debug.Log("Collided with enemy");
-            // damage the enemy
+            EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
+            enemy.TakeDamage(_bulletDamage);
         }
 
         gameObject.SetActive(false);
@@ -36,20 +40,26 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
         gameObject.SetActive(false);
     }
 
-    public void SetBulletRotation(Quaternion rotation){
+    private void SetBulletRotation(Quaternion rotation){
         transform.rotation = rotation;
     }
 
-    public void SetBulletSpeed(float bulletSpeed){
+    private void SetBulletSpeed(float bulletSpeed){
         _bulletSpeed = bulletSpeed;
     }
 
-    public void InitializeBullet(float bulletSpeed, Quaternion shooterRotation){
+    private void SetBulletDamage(float damage){
+        _bulletDamage = damage;
+    }
+
+    public void InitializeBullet(float bulletSpeed, float bulletDamage, Quaternion shooterRotation){
         SetBulletSpeed(bulletSpeed);
         SetBulletRotation(shooterRotation);
+        SetBulletDamage(bulletDamage);
     }
 
     private void ResetBullet(){
         SetBulletSpeed(_bulletSpeedBase);
+        SetBulletDamage(0);
     }
 }
