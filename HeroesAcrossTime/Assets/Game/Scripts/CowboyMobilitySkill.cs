@@ -5,15 +5,19 @@ using System;
 
 public class CowboyMobilitySkill : CharacterSkillBase // rolling out of danger, has iFrames
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public override bool TryUseSkill(Action OnSkillUsed){
+        if(!_readyToUse)
+            return false;
+        StartBulletTime();
+        StartCoroutine(StartSkillCooldown());
+        StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
+        return true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private IEnumerator StartBulletTime(){
+        GameTimeController.Instance.EnterSlowMotion();
+        yield return new WaitForSeconds(4f);
+        GameTimeController.Instance.ExitSlowMotion();
     }
+
 }

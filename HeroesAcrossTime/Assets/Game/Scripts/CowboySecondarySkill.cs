@@ -7,26 +7,36 @@ public class CowboySecondarySkill : CharacterSkillBase // fires 3 shots in quick
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
 
+    private float bulletDamage = 35f;
+
     public override bool TryUseSkill(Action OnSkillUsed){
         if(!_readyToUse)
             return false;
-        // use whatever skill this is
-        List<GameObject> bullets = new List<GameObject>();
-
-        for(int i = 0; i < 3; i++){
-            GameObject bullet = _bulletPoolController.GetBulletToShoot();
-            bullets.Add(bullet);
-        }
-        ShootBullets(bullets);
+        
+        ShootBullets();
         Debug.Log("Waiting for " + _skillCooldown + " seconds");
         StartCoroutine(StartSkillCooldown());
         StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
         return true;
     }
 
-    private void ShootBullets(List<GameObject> bullets){
-        Debug.Log("Shot 3 bullets (cowboy secondary skill)");
-        // shoot the bullets
+    private void ShootBullets(){
+        List<GameObject> bullets = new List<GameObject>();
+        Debug.Log("Shot some bullets (cowboy secondary skill)");
+
+        for(int i = 0; i < 3; i++){
+            GameObject bullet = _bulletPoolController.GetBulletToShoot(); // adds the first bullet three times?
+            bullets.Add(bullet);
+        }
+
+        foreach(GameObject bullet in bullets){
+            BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
+            bullet.SetActive(true);
+            bullet.transform.position = _playerCharacter.GetGunBarrelTransform().position;
+            bulletBehaviour.InitializeBullet(50, bulletDamage, transform.rotation);
+            // shot the bullet
+            bullets.Remove(bullet);
+        }
     }
     
 }

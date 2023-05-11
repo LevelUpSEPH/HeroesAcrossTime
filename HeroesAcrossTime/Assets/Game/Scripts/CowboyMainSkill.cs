@@ -6,6 +6,7 @@ using System;
 public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
 {
     [SerializeField] private BulletPoolController _bulletPoolController;
+    private float bulletDamage = 40f;
 
     public override bool TryUseSkill(Action OnSkillUsed){
         if(!_readyToUse)
@@ -22,7 +23,7 @@ public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
         BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
         bullet.SetActive(true);
         bullet.transform.position = _playerCharacter.GetGunBarrelTransform().position;
-        bulletBehaviour.InitializeBullet(50, transform.rotation);
+        bulletBehaviour.InitializeBullet(50, bulletDamage, transform.rotation);
     }
 
 }
