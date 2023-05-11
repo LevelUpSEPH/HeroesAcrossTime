@@ -8,6 +8,7 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerCharacter _playerCharacter;
     private GameObject _activePlayerModel;
     private float _movementSpeed = 5f;
+    private bool _canMove = true;
 
     private void Start(){
         Initialize();
@@ -19,7 +20,8 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     private void Update(){
-        HandleMovement();
+        if(_canMove)
+            HandleMovement();
         HandleRotation();
     }
 
@@ -48,5 +50,11 @@ public class PlayerMovementController : MonoBehaviour
     private void OnSwitchedCharacter(PlayerCharacter playerCharacter){
         _playerCharacter = playerCharacter;
         _activePlayerModel = _playerCharacter.gameObject;
+        _playerCharacter.SetPlayerMovementController(this);
     }
+
+    public void SetCanMove(bool toSet){
+        _canMove = toSet;
+    }
+    
 }
