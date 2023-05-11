@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float _health = 100f;
     [SerializeField] private GameObject _enemyModel;
     [SerializeField] private GameObject _enemyRagdoll;
+    [SerializeField] private ParticleSystem _deathParticle;
     private EnemyMovementController _enemyMovementController;
     private Transform _playerTransform;
     private bool _canSeePlayer = false;
@@ -56,7 +57,7 @@ public class EnemyController : MonoBehaviour
 
         _health -= damage;
 
-        if(_health <= -20f){
+        if(_health <= -35f){
             OverkillDie();
         }
 
@@ -76,7 +77,7 @@ public class EnemyController : MonoBehaviour
         _isDead = true;
         GetComponent<CapsuleCollider>().enabled = false;
         _enemyModel.SetActive(false);
-        // play explosion/evaporation particle
+        _deathParticle.Play();        
     }
 
     private void ShootAtPlayer(){
