@@ -8,18 +8,17 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] protected float _health = 100f;
     [SerializeField] protected GameObject _playerModel;
     [SerializeField] protected Transform _gunBarrelPosition;
-    [SerializeField] private CharacterSkillBase _mainSkill; // shooting
-    [SerializeField] private CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
-    [SerializeField] private CharacterSkillBase _movementSkill; // dash / teleport / roll
-    [SerializeField] private CharacterSkillBase _ultimateSkill;
+    [SerializeField] protected CharacterSkillBase _mainSkill; // shooting
+    [SerializeField] protected CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
+    [SerializeField] protected CharacterSkillBase _movementSkill; // dash / teleport / roll
+    [SerializeField] protected CharacterSkillBase _ultimateSkill;
 
+    private PlayerMovementController _playerMovementController;
     private bool _isActive = false;
-    protected float _ultMaxPoint;
-    protected float _ultPoint;
     protected bool _canUseSkill = true;
     protected bool _isAlive = true;
 
-    private void Update(){
+    protected virtual void Update(){
         if(!_isAlive)
             return;
         if(!_isActive)
@@ -31,13 +30,13 @@ public class PlayerCharacter : MonoBehaviour
             
     }
 
-    private void HandleSkills(){
+    protected virtual void HandleSkills(){
 
         if(Input.GetMouseButtonDown(0)){
             TryUseSkill(_mainSkill);
         }
 
-        if(Input.GetMouseButton(1)){
+        if(Input.GetMouseButtonDown(1)){
             TryUseSkill(_secondarySkill);
         }
 
@@ -45,22 +44,19 @@ public class PlayerCharacter : MonoBehaviour
             TryUseSkill(_movementSkill);
         
         if(Input.GetKeyDown(KeyCode.Q)){
-            if(_ultPoint >= _ultMaxPoint)
                 TryUseSkill(_ultimateSkill);
         }
     }
     
     public void Activate(){
         _isActive = true;
-        // enable model 
     }
 
     public void Deactivate(){
         _isActive = false;
-        // disable model
     }
 
-    protected void TakeDamage(float damage){
+    public virtual void TakeDamage(float damage){
         _health -= damage;
 
         if(_health <= 0)
@@ -93,6 +89,14 @@ public class PlayerCharacter : MonoBehaviour
 
     public Transform GetGunBarrelTransform(){
         return _gunBarrelPosition;
+    }
+
+    public float GetHealth(){
+        return _health;
+    }
+
+    public void SetPlayerMovementController(PlayerMovementController playerMovementController){
+        _playerMovementController = playerMovementController;
     }
 
 }
