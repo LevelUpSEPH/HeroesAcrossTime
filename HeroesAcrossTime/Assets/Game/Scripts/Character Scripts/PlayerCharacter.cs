@@ -5,6 +5,8 @@ using System;
 
 public class PlayerCharacter : MonoBehaviour
 {
+    public static event Action PlayerDied;
+
     [SerializeField] protected float _health = 100f;
     [SerializeField] protected GameObject _playerModel;
     [SerializeField] protected Transform _gunBarrelPosition;
@@ -12,11 +14,16 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] protected CharacterSkillBase _secondarySkill; // special ability (burst / aoe)
     [SerializeField] protected CharacterSkillBase _movementSkill; // dash / teleport / roll
     [SerializeField] protected CharacterSkillBase _ultimateSkill;
+    [SerializeField] protected CharacterHealthbar _characterHealthbar;
 
     private PlayerMovementController _playerMovementController;
-    private bool _isActive = false;
+    protected bool _isActive = false;
     protected bool _canUseSkill = true;
     protected bool _isAlive = true;
+
+    private void Start(){
+        _characterHealthbar.UpdateHealthBar(_health);
+    }
 
     protected virtual void Update(){
         if(!_isAlive)
@@ -58,6 +65,8 @@ public class PlayerCharacter : MonoBehaviour
 
     public virtual void TakeDamage(float damage){
         _health -= damage;
+        
+        _characterHealthbar.UpdateHealthBar(_health);
 
         if(_health <= 0)
             Die();
@@ -65,6 +74,7 @@ public class PlayerCharacter : MonoBehaviour
 
     protected void Die(){
         _isAlive = false;
+        PlayerDied?.Invoke();
     }
 
     protected void TryUseSkill(CharacterSkillBase characterSkillBase){

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides with something, 
 {
     [SerializeField] private float _bulletLifetime = 3f;
+    private bool _isPlayerBullet = true;
     private float _bulletSpeedBase = 30f;
     private float _bulletSpeed;
     private float _bulletDamage;
@@ -20,14 +21,13 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
     }
 
     private void OnTriggerEnter(Collider other){
-        Debug.Log(other.gameObject.name);
         
-        if(other.gameObject.CompareTag("Player")){
-            // damage the player
+        if(other.gameObject.CompareTag("Player") && !_isPlayerBullet){
+            PlayerCharacter playerCharacter = ActiveCharacterController.Instance.GetActivePlayerCharacter(); // bad usage
+            playerCharacter.TakeDamage(_bulletDamage);
         }
 
-        else if(other.gameObject.CompareTag("Enemy")){
-            Debug.Log("Collided with enemy");
+        else if(other.gameObject.CompareTag("Enemy") && _isPlayerBullet){
             EnemyController enemy = other.gameObject.GetComponent<EnemyController>();
             enemy.TakeDamage(_bulletDamage);
         }
@@ -52,14 +52,20 @@ public class BulletBehaviour : MonoBehaviour // gets destroyed when it collides 
         _bulletDamage = damage;
     }
 
-    public void InitializeBullet(float bulletSpeed, float bulletDamage, Quaternion shooterRotation){
+    private void SetIsPlayerBullet(bool isPlayerBullet){
+        _isPlayerBullet = isPlayerBullet;
+    }
+
+    public void InitializeBullet(float bulletSpeed, float bulletDamage, bool isPlayerBullet, Quaternion shooterRotation){
         SetBulletSpeed(bulletSpeed);
         SetBulletRotation(shooterRotation);
         SetBulletDamage(bulletDamage);
+        SetIsPlayerBullet(isPlayerBullet);
     }
 
     private void ResetBullet(){
         SetBulletSpeed(_bulletSpeedBase);
         SetBulletDamage(0);
+        SetIsPlayerBullet(false);
     }
 }

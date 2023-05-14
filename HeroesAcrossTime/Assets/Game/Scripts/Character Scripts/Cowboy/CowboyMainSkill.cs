@@ -18,12 +18,11 @@ public class CowboyMainSkill : CharacterSkillBase // basic revolver shooting
     }
 
     private void Shoot(){
-        Debug.Log("Shot bullet (cowboymainskill)");
         GameObject bullet = _bulletPoolController.GetBulletToShoot();
         BulletBehaviour bulletBehaviour = bullet.GetComponent<BulletBehaviour>();
         bullet.SetActive(true);
         bullet.transform.position = _playerCharacter.GetGunBarrelTransform().position;
-        bulletBehaviour.InitializeBullet(50, bulletDamage, transform.rotation);
+        bulletBehaviour.InitializeBullet(50, bulletDamage, true, transform.rotation);
     }
 
 }

@@ -15,7 +15,7 @@ public class CyberMobilitySkill : CharacterSkillBase
     }
 
     private void TeleportForward(){
-        transform.position = transform.position + transform.forward * 3; // teleport 3 units fw
+        transform.parent.position = transform.position + transform.forward * 3; // teleport 3 units fw
             
     }
 }

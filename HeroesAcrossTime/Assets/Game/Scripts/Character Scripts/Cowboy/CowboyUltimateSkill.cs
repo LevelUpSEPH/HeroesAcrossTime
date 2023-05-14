@@ -17,7 +17,7 @@ public class CowboyUltimateSkill : CharacterSkillBase // shoots a high noon bull
     private void FireHighNoonShot(){
         if(Physics.Raycast(_playerCharacter.GetGunBarrelTransform().position, transform.forward, out RaycastHit raycastHit, Mathf.Infinity)){
             if(raycastHit.collider.TryGetComponent<EnemyController>(out EnemyController enemyController)){
-                enemyController.TakeDamage(999);
+                enemyController.TakeDamage(100);
             }
         }
     }

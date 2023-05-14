@@ -32,4 +32,12 @@ public class CharacterSkillBase : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         OnCooldownComplete();
     }
+
+    public string GetSkillName(){
+        return this.GetType().ToString();
+    }
+
+    public bool GetSkillIsReady(){
+        return _readyToUse;
+    }
 }

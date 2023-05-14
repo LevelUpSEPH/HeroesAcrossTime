@@ -12,12 +12,15 @@ public class CyberCharacter : PlayerCharacter
     {
         base.Update();
 
-        if(!_tookDamageLately)
+        if(!_tookDamageLately){
             _health += Time.deltaTime * _healthRegenMultiplier;
+            _characterHealthbar.UpdateHealthBar(_health);
+        }
+            
     }
 
     protected override void HandleSkills(){
-
+            
         if(Input.GetMouseButtonDown(0)){
             TryUseSkill(_mainSkill);
         }
@@ -37,6 +40,8 @@ public class CyberCharacter : PlayerCharacter
     public override void TakeDamage(float damage){
         _health -= damage;
         _tookDamageLately = true;
+
+        _characterHealthbar.UpdateHealthBar(_health);
 
         StartCoroutine(StartTookDamageCountdown());
 

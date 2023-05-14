@@ -11,6 +11,7 @@ public class CyberSecondarySkill : CharacterSkillBase // charges the damage of f
     public override bool TryUseSkill(Action OnSkillUsed){
         if(!_readyToUse)
             return false;
+            
         ChargeMainShot();
         StartCoroutine(StartSkillCooldown());
         StartCoroutine(GlobalSkillCooldown(OnSkillUsed));
